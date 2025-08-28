@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom of Valoria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e8e8e8;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, #0f3460, #533483);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+        
+        .crown {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+        
+        .kingdom-name {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .motto {
+            font-style: italic;
+            color: #c9c9c9;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .nav {
+            background: rgba(15,52,96,0.9);
+            padding: 1rem 0;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #ffd700;
+        }
+        
+        .nav-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: #e8e8e8;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255,215,0,0.1);
+            border: 1px solid transparent;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255,215,0,0.2);
+            border-color: #ffd700;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.3);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,215,0,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        
+        .section h2 {
+            color: #ffd700;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .lords-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .lord-card {
+            background: linear-gradient(145deg, rgba(83,52,131,0.3), rgba(15,52,96,0.3));
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid rgba(255,215,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lord-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.05) 0%, transparent 70%);
+            transition: all 0.3s ease;
+            z-index: 0;
+        }
+        
+        .lord-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255,215,0,0.2);
+            border-color: #ffd700;
+        }
+        
+        .lord-card:hover::before {
+            opacity: 1;
+        }
+        
+        .lord-card h3 {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .lord-card .title {
+            color: #b8b8b8;
+            font-style: italic;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .lord-card p {
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .founding-info {
+            background: linear-gradient(135deg, rgba(83,52,131,0.2), rgba(15,52,96,0.2));
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+            margin: 2rem 0;
+        }
+        
+        .tribes-section {
+            text-align: center;
+        }
+        
+        .tribe-count {
+            font-size: 3rem;
+            color: #ffd700;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .law-item {
+            background: rgba(255,215,0,0.1);
+            margin: 1rem 0;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #ffd700;
+            transition: all 0.3s ease;
+        }
+        
+        .law-item:hover {
+            background: rgba(255,215,0,0.15);
+            transform: translateX(5px);
+        }
+        
+        .law-number {
+            color: #ffd700;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .culture-item {
+            background: rgba(83,52,131,0.2);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,215,0,0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .culture-item:hover {
+            transform: scale(1.05);
+            border-color: #ffd700;
+            box-shadow: 0 5px 15px rgba(255,215,0,0.2);
+        }
+        
+        .culture-item h4 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .valorian-word {
+            color: #ffd700;
+            font-weight: bold;
+            font-style: italic;
+        }
+        
+        .national-symbol {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer {
+            background: rgba(15,52,96,0.9);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 2px solid #ffd700;
+        }
+        
+        .est-date {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .kingdom-name {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .lords-grid, .culture-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="crown">👑</div>
+        <h1 class="kingdom-name">Kingdom of Valoria</h1>
+        <p class="motto">"Zephyrok val Threnidos, Valdris val Honorem"<br>
+        <small style="opacity: 0.8;">(Unity in Diversity, Strength in Honor)</small></p>
+    </header>
+    
+    <nav class="nav">
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#leadership">Leadership</a></li>
+            <li><a href="#laws">Royal Laws</a></li>
+            <li><a href="#culture">Culture</a></li>
+            <li><a href="#tribes">Tribes</a></li>
+            <li><a href="#news">Kingdom News</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <section id="about" class="section">
+            <h2>Welcome to the Kingdom of Valoria</h2>
+            <p>The Kingdom of Valoria stands as a testament to friendship, creativity, and shared vision. Founded through the unity of great minds and noble hearts, our realm represents the power of collaboration and the beauty of diverse leadership working toward common goals.</p>
+            
+            <div class="founding-info">
+                <h3>Founded: February 7th, 2025 - The Great <span class="valorian-word">Threnidox</span> (Founding Day)</h3>
+                <p>Born from the vision of three Great Lords and expanded through the wisdom of our complete council, Valoria represents a new chapter in micronational excellence. Our founding marks the beginning of the <span class="valorian-word">Era Valoriana</span> - the Valorian Age.</p>
+            </div>
+        </section>
+        
+        <section id="leadership" class="section">
+            <h2>The Royal Council - <span class="valorian-word">Consilium Regalis</span></h2>
+            <div class="lords-grid">
+                <div class="lord-card">
+                    <h3>King Callistus</h3>
+                    <div class="title">Sovereign Ruler of Valoria • <span class="valorian-word">Rex Supremus</span></div>
+                    <p>His Royal Majesty King Callistus leads the Kingdom of Valoria with wisdom and vision. As the founding monarch, he guides the realm toward prosperity and unity among all tribes and territories. Bearer of the Sacred <span class="valorian-word">Valdroscepter</span> (Crown Scepter).</p>
+                </div>
+                
+                <div class="lord-card">
+                    <h3>Field Marshal Kaldor</h3>
+                    <div class="title">Lord of War • <span class="valorian-word">Dominus Bellicus</span> • Founder of Modesty State • Voidfather • Lord of Land Warfare</div>
+                    <p>A founding Great Lord, Field Marshal Kaldor commands the military might of Valoria and serves as the Voidfather of Modesty, bringing strategic brilliance to the realm's defense. Master of the ancient <span class="valorian-word">Valdris Tacticus</span> (War Strategy).</p>
+                </div>
+                
+                <div class="lord-card">
+                    <h3>Father Zephyrus</h3>
+                    <div class="title">Leader of Valorian Church • <span class="valorian-word">Sanctus Zephyrus</span> • Air Chief Marshal • Lord of Curses & Blessings</div>
+                    <p>The spiritual and aerial commander of Valoria, Father Zephyrus guides both the souls and skies of the kingdom with divine wisdom. Keeper of the <span class="valorian-word">Liber Benedictionis</span> (Book of Blessings) and commander of the sky forces.</p>
+                </div>
+                
+                <div class="lord-card">
+                    <h3>Prime Minister Aldric</h3>
+                    <div class="title">Chief Minister of Valoria • <span class="valorian-word">Primus Ministrus</span></div>
+                    <p>Prime Minister Aldric oversees the day-to-day governance of the kingdom, ensuring that the will of the crown is carried out with efficiency and justice. Guardian of the <span class="valorian-word">Codex Administratus</span> (Administrative Code).</p>
+                </div>
+                
+                <div class="lord-card">
+                    <h3>Lord Elion</h3>
+                    <div class="title">Astrarch of Modesty • <span class="valorian-word">Astrarch Modestiae</span></div>
+                    <p>As the Astrarch (state ruler) of Modesty, Lord Elion governs one of Valoria's most important territories with honor and dedication to the crown. Protector of the <span class="valorian-word">Sanctuarium Modestiae</span> (Sanctuary of Modesty).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="laws" class="section">
+            <h2>The Royal Laws of Valoria - <span class="valorian-word">Lex Valoriana</span></h2>
+            <p style="text-align: center; margin-bottom: 2rem; font-style: italic;">
+                "These sacred laws, blessed by Father Zephyrus and decreed by His Majesty King Callistus, shall guide all citizens of Valoria in their daily <span class="valorian-word">Valdrix</span> (noble living)."
+            </p>
+            
+            <div class="law-item">
+                <span class="law-number">Law I:</span>
+                Thou shalt not consume any <span class="valorian-word">Nutritum</span> (food) without first performing the sacred ritual of <span class="valorian-word">Aqua Purification</span> (hand washing). The penalty for violation is one hour of dishwashing duty.
+            </div>
+            
+            <div class="law-item">
+                <span class="law-number">Law II:</span>
+                All citizens must greet each other with the traditional Valorian phrase "<span class="valorian-word">Valdrax Zephyros!</span>" (May the winds favor you!) at least once per day, lest they be required to compose a haiku about friendship.
+            </div>
+            
+            <div class="law-item">
+                <span class="law-number">Law III:</span>
+                No citizen may claim to be "bored" without first attempting to learn three new <span class="valorian-word">Vocabula Valoriana</span> (Valorian words). Violation results in mandatory storytelling duty for the kingdom.
+            </div>
+            
+            <div class="law-item">
+                <span class="law-number">Law IV:</span>
+                The sacred <span class="valorian-word">Tempus Snackicus</span> (snack time) must be respected by all. Interrupting someone's snack break is punishable by having to share your own snacks.
+            </div>
+            
+            <div class="law-item">
+                <span class="law-number">Law V:</span>
+                All disputes shall be settled through the ancient art of <span class="valorian-word">Gladius Papyrus</span> (rock, paper, scissors), best of three rounds. The loser must compliment the winner's strategic prowess.
+            </div>
+            
+            <div class="law-item">
+                <span class="law-number">Law VI:</span>
+                Every citizen must contribute to the Royal Collection of <span class="valorian-word">Ridicula Facta</span> (funny facts) at least once per month. Failure to do so results in temporary banishment to the Corner of Contemplation (for exactly 5 minutes).
+            </div>
+            
+            <div class="law-item">
+                <span class="law-number">Law VII:</span>
+                The wearing of mismatched socks is not only permitted but encouraged on <span class="valorian-word">Dies Sockicus</span> (Sock Freedom Day), which occurs whenever someone declares it to be so.
+            </div>
+        </section>
+
+        <section id="culture" class="section">
+            <h2>Valorian Culture & Traditions</h2>
+            <div class="culture-grid">
+                <div class="culture-item">
+                    <div class="national-symbol">🌟</div>
+                    <h4>National Symbol</h4>
+                    <p>The <span class="valorian-word">Stella Valoris</span> (Star of Valor) represents our guiding light and unity across all six tribes.</p>
+                </div>
+                
+                <div class="culture-item">
+                    <div class="national-symbol">🏺</div>
+                    <h4>Sacred Artifact</h4>
+                    <p>The legendary <span class="valorian-word">Chalice Amicitiae</span> (Chalice of Friendship) from which all important toasts are made.</p>
+                </div>
+                
+                <div class="culture-item">
+                    <div class="national-symbol">📜</div>
+                    <h4>National Literature</h4>
+                    <p>The epic <span class="valorian-word">"Chronicles Valoriana"</span> documents our kingdom's adventures and legendary moments.</p>
+                </div>
+                
+                <div class="culture-item">
+                    <div class="national-symbol">🎭</div>
+                    <h4>Royal Entertainment</h4>
+                    <p>The traditional <span class="valorian-word">Theatrum Ridiculus</span> (Comedy Theater) brings joy to citizens through improvised performances.</p>
+                </div>
+                
+                <div class="culture-item">
+                    <div class="national-symbol">🍯</div>
+                    <h4>National Delicacy</h4>
+                    <p><span class="valorian-word">Dulcia Valoris</span> (Valorian Sweets) - our famous honey cakes shared during celebrations.</p>
+                </div>
+                
+                <div class="culture-item">
+                    <div class="national-symbol">🎵</div>
+                    <h4>National Anthem</h4>
+                    <p><span class="valorian-word">"Cantus Gloriae Valoriae"</span> - a majestic tune that definitely exists and is totally not made up on the spot.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="tribes" class="section tribes-section">
+            <h2>The Six Noble Tribes - <span class="valorian-word">Tribus Nobilis</span></h2>
+            <div class="tribe-count">6</div>
+            <p>Our kingdom is built upon the foundation of six noble tribes, each with their own lord and traditions. Together, they form the diverse tapestry that makes Valoria strong and prosperous.</p>
+            <p style="margin-top: 1rem; font-style: italic; color: #c9c9c9;">Each tribe contributes its unique strengths to the greater glory of the kingdom, following the ancient principle of <span class="valorian-word">Diversitas in Unitas</span> (Diversity in Unity).</p>
+            <div style="margin-top: 2rem;">
+                <p><strong>Tribal Motto:</strong> <span class="valorian-word">"Sex Tribus, Unum Regnum!"</span><br>
+                <small style="opacity: 0.8;">(Six Tribes, One Kingdom!)</small></p>
+            </div>
+        </section>
+
+        <section id="news" class="section">
+            <h2>Royal Proclamations & Kingdom News</h2>
+            
+            <div class="founding-info">
+                <h3>📰 Latest from the Royal <span class="valorian-word">Nuntius</span> (News Herald)</h3>
+                <p><strong>Royal Decree:</strong> His Majesty King Callistus has declared that the kingdom's first annual <span class="valorian-word">Festum Snackicus</span> (Great Snack Festival) will be held whenever someone brings really good snacks to share.</p>
+            </div>
+
+            <div class="founding-info">
+                <h3>⚔️ Military Updates</h3>
+                <p><strong>Field Marshal's Report:</strong> The Valorian Defense Forces have successfully defended the kingdom against the dreaded invasion of homework. All citizens are advised that the <span class="valorian-word">Procrastination Protocol</span> remains in effect.</p>
+            </div>
+
+            <div class="founding-info">
+                <h3>⛪ Church Announcements</h3>
+                <p><strong>From Father Zephyrus:</strong> This week's blessing is upon all citize
